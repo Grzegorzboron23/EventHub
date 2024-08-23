@@ -2,7 +2,10 @@ package com.example.demo.model;
 
 import com.example.demo.valueobject.Address;
 import com.example.demo.valueobject.DateRange;
-import jakarta.persistence.*;
+import jakarta.persistence.Embedded;
+import jakarta.persistence.Entity;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,12 +13,12 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name="Event")
+@Table(name = "Event")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Event extends BaseEntity{
+public class Event extends BaseEntity {
 
     @Embedded
     @NotNull
@@ -27,6 +30,8 @@ public class Event extends BaseEntity{
 
     @NotNull
     private String name;
+
+    private String description;
 
     @Embedded
     private Address address;

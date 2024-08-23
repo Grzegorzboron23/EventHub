@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 @Embeddable
 public record DateRange(LocalDateTime startDate, LocalDateTime endDate) {
 
-    public DateRange{
+    public DateRange {
         if (startDate.isAfter(endDate)) {
             throw new IllegalArgumentException("Start date cannot be after end date");
         }

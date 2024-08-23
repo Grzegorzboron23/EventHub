@@ -26,19 +26,19 @@ public class User extends BaseEntity {
     private String surname;
 
     @NotNull
-    @Column(unique=true)
+    @Column(unique = true)
     private String userName;
 
     @NotNull
     private String hashedPassword;
 
     @NotNull
-    @Column(unique=true)
+    @Column(unique = true)
     @Email
     private String email;
 
     @Pattern(regexp = "\\d{11}")
-    @Column(unique=true)
+    @Column(unique = true)
     private String phoneNumber;
 
     private Integer points;
