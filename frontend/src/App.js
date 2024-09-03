@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import 'bootstrap/dist/css/bootstrap.css';
 
-function listGroup(){
+function listGroup() {
     let items = ["Senegal", "RPA", "EGIPT"];
 }
 
@@ -19,13 +20,35 @@ const App = () => {
     }, []);
 
     return (
-        <div>
-            <h1>User List</h1>
-            <ul>
+        <div className="container">
+            {/* Navbar Bootstrap */}
+            <nav className="navbar navbar-expand-lg navbar-light bg-light">
+                <a className="navbar-brand" href="#">User App</a>
+                <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span className="navbar-toggler-icon"></span>
+                </button>
+                <div className="collapse navbar-collapse" id="navbarNav">
+                    <ul className="navbar-nav">
+                        <li className="nav-item active">
+                            <a className="nav-link" href="#">Home <span className="sr-only">(current)</span></a>
+                        </li>
+                        <li className="nav-item">
+                            <a className="nav-link" href="#">Users</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+            {/* User List */}
+            <h1 className="mt-4">User List</h1>
+            <ul className="list-group">
                 {users.map(user => (
-                    <li key={user.id}>{user.name}</li>
+                    <li className="list-group-item" key={user.id}>{user.name}</li>
                 ))}
             </ul>
+
+            {/* Bootstrap Button */}
+            <button className="btn btn-primary mt-3">Click me</button>
         </div>
     );
 };

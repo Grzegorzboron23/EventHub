@@ -12,8 +12,8 @@ import java.util.List;
 @Repository
 public interface EventRepository extends BaseRepository<Event, Long> {
 
-    @Query(value = "from Event t WHERE startDate BETWEEN :startDate AND :endDate")
-    public List<Event> getAllBetweenDates(@Param("startDate") LocalDateTime startDate,
+    @Query(value = "from Event t WHERE t.dateRange.startDate BETWEEN :startDate AND :endDate")
+    List<Event> getAllBetweenDates(@Param("startDate") LocalDateTime startDate,
                                           @Param("endDate") LocalDateTime endDate,
                                           Pageable pageable);
 }
