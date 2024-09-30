@@ -2,10 +2,11 @@ package com.example.demo.dto;
 
 import com.example.demo.model.Event;
 import com.example.demo.valueobject.Address;
+import lombok.Getter;
 
 import java.time.LocalDateTime;
 
-
+@Getter
 public class EventDTO {
 
     public EventDTO(Event event) {

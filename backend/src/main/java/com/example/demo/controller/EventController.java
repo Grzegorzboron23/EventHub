@@ -1,14 +1,12 @@
 package com.example.demo.controller;
 
 import com.example.demo.dto.EventDTO;
-import com.example.demo.dto.EventFilterRequestDTO;
 import com.example.demo.service.EventService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
@@ -19,24 +17,13 @@ public class EventController {
     private final EventService eventService;
 
     @GetMapping("/event/{id}")
-    public EventDTO getSingleEvent(@RequestParam Long id) {
-        return eventService.getSingleEvent(id);
+    public ResponseEntity<EventDTO> getSingleEvent(@PathVariable Long id) {
+        return ResponseEntity.ok(eventService.getSingleEvent(id));
     }
 
     @GetMapping("/event/all/{page}")
-    public List<EventDTO> getEventByPage(@RequestParam(required = false) Integer page) {
-        List<EventDTO> eventDTOList = eventService.getEvents(page == null ? 1 : page);
-
-        return eventDTOList;
+    public ResponseEntity<List<EventDTO>> getEventByPage(@PathVariable(required = false) Integer page) {
+        return ResponseEntity.ok(eventService.getEvents(page == null ? 1 : page));
     }
 
-    @PostMapping("/event/all/{page}")
-    public List<EventDTO> getEventsBetween(@RequestBody EventFilterRequestDTO filterRequest) {
-        return eventService.getEventsBetweenDates(
-                filterRequest.startDate(),
-                filterRequest.endDate(),
-                filterRequest.page()
-        );
-
-    }
 }
