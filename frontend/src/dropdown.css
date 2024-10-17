@@ -1,0 +1,21 @@
+@media (max-width: 767px) {
+    .customDropdown  .dropdown-menu {
+        background: transparent;
+        border: none;
+        position: relative;
+        width: 100%;
+    }
+
+    .customDropdown .dropdown-item{
+        background: transparent; 
+        color:white;
+        text-align: left;
+        transition: transform 0.3s ease, background-color 0.3s ease;
+    }
+
+    .customDropdown .dropdown-item:hover{
+        background: transparent; 
+        transform: scale(1.2);
+        color: white;
+    }
+}

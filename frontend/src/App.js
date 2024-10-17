@@ -1,17 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 
-function listGroup() {
-    let items = ["Senegal", "RPA", "EGIPT"];
-}
 
 const App = () => {
     const [users, setUsers] = useState([]);
 
     useEffect(() => {
-        // Symulowane pobieranie danych użytkowników
         const fetchUsers = async () => {
-            const response = await fetch('/user'); // Upewnij się, że twój backend działa i obsługuje to zapytanie
+            const response = await fetch('/user');
             const data = await response.json();
             setUsers(data);
         };
@@ -21,7 +17,6 @@ const App = () => {
 
     return (
         <div className="container">
-            {/* Navbar Bootstrap */}
             <nav className="navbar navbar-expand-lg navbar-light bg-light">
                 <a className="navbar-brand" href="#">User App</a>
                 <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
