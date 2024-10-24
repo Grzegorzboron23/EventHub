@@ -1,5 +1,7 @@
 package com.example.demo.model;
 
+import com.example.demo.dto.EventDTO;
+import com.example.demo.repository.UserRepository;
 import com.example.demo.valueobject.Address;
 import com.example.demo.valueobject.DateRange;
 import jakarta.persistence.Embedded;
@@ -33,4 +35,25 @@ public class Event extends BaseEntity {
     @Embedded
     private Address address;
 
+    public Event(EventDTO eventDTO, User user) {
+        this.name = eventDTO.getEventName();
+        this.description = eventDTO.getEventDescription();
+        this.setDateRange(
+                new DateRange(
+                        eventDTO.getStartTime(),
+                        eventDTO.getEndTime()
+                )
+        );
+
+        this.setAddress(
+                new Address(
+                            eventDTO.getAddress().getStreet(),
+                        eventDTO.getAddress().getCity(),
+                        eventDTO.getAddress().getPostalCode(),
+                        eventDTO.getAddress().getCountry()
+                )
+        );
+
+        this.setUsers(user);
+    }
 }

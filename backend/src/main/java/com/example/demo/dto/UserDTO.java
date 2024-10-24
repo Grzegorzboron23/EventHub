@@ -9,6 +9,8 @@ public record UserDTO(Long id,
                       String userName,
                       String email,
                       String phoneNumber,
+                      String role,
+                      Integer rolePrivileges,
                       Integer points) {
     public UserDTO(User user) {
         this(user.getId(),
@@ -17,6 +19,8 @@ public record UserDTO(Long id,
                 user.getUserName(),
                 user.getEmail(),
                 user.getPhoneNumber(),
+                user.getUserPrivileges().getRole(),
+                user.getUserPrivileges().getPrivilegesNumber(),
                 user.getPoints());
     }
 }

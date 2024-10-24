@@ -1,9 +1,11 @@
 package com.example.demo;
 
+import com.example.demo.enums.RoleEnum;
 import com.example.demo.model.Event;
 import com.example.demo.model.User;
 import com.example.demo.valueobject.Address;
 import com.example.demo.valueobject.DateRange;
+import com.example.demo.valueobject.UserPrivileges;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -38,7 +40,12 @@ public class TestUtils {
                 "dihdygfdfdyofdfdsy",
                 "grzegorzp24@gmail.com",
                 "856738444",
+                TestUtils.setAdminPrivileges(),
                 0);
+    }
+
+    public static UserPrivileges setAdminPrivileges(){
+        return new UserPrivileges(RoleEnum.ADMIN);
     }
 
 }
