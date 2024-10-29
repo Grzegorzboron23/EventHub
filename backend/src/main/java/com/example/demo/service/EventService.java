@@ -7,18 +7,21 @@ import com.example.demo.model.Event;
 import com.example.demo.model.User;
 import com.example.demo.repository.EventRepository;
 import com.example.demo.repository.UserRepository;
+import com.example.demo.utils.PagedResponse;
 import com.example.demo.utils.UserUtils;
 import com.example.demo.valueobject.DateRange;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.nio.file.AccessDeniedException;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
 public class EventService {
@@ -42,13 +45,23 @@ public class EventService {
         return new EventDTO(event);
     }
 
-    public List<EventDTO> getEvents(Integer page) {
+    public PagedResponse<EventDTO> getEvents(Integer page) {
         PageRequest pageRequest = PageRequest.of(page - 1, PAGE_SIZE, Sort.by("dateRange.startDate").descending());
         Page<Event> eventPage = eventRepository.findAll(pageRequest);
 
-        return eventPage.stream()
+
+        List<EventDTO> eventDTOs = eventPage.stream()
                 .map(EventDTO::new)
                 .toList();
+
+        return new PagedResponse<>(
+                eventDTOs,
+                eventPage.getNumber() + 1,
+                eventPage.getSize(),
+                eventPage.getTotalElements(),
+                eventPage.getTotalPages(),
+                eventPage.isLast()
+        );
     }
 
 
@@ -82,7 +95,6 @@ public class EventService {
         return new  EventDTO(eventRepository.save(event));
     }
 
-//    TODO: ADD TESTS
     @Transactional
     public void deleteEvent(Long id) throws AccessDeniedException {
         Event event = eventRepository.findById(id)
@@ -123,5 +135,24 @@ public class EventService {
                 .orElseThrow(() -> new IllegalArgumentException("Cannot find user, please try again later"));
         Event event = new Event(eventDTO, user);
        return new EventDTO(eventRepository.save(event));
+    }
+
+
+    public PagedResponse<EventDTO> findByNameContaining(String name, Integer page) {
+        PageRequest pageRequest = PageRequest.of(page, PAGE_SIZE, Sort.by("dateRange.startDate").descending());
+        Page<Event> events = eventRepository.findByNameContainingIgnoreCase(name, pageRequest);
+
+        List<EventDTO> eventDTOs = events.stream()
+                .map(EventDTO::new)
+                .collect(Collectors.toList());
+
+        return new PagedResponse<>(
+                eventDTOs,
+                events.getNumber() +1,
+                events.getSize(),
+                events.getTotalElements(),
+                events.getTotalPages(),
+                events.isLast()
+        );
     }
 }

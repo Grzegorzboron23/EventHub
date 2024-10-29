@@ -1,0 +1,9 @@
+.buttonSearch {
+    background-color: transparent;
+    border: none;
+    transition: transform 0.6s ease;
+}
+
+.buttonSearch:hover i {
+    transform: scale(1.2); 
+}

@@ -5,6 +5,7 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import '../styles/navbar.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import { useNavigate } from 'react-router-dom';
+import SearchBar from '../components/SearchBar';
 
 
 
@@ -44,14 +45,16 @@ const Navbar = () => {
                 
             </div>
 
-            <div className="mx-auto d-flex">
+            {/* <div className="mx-auto d-flex">
                 <form className="form-inline d-flex">
                     <input className="form-control mr-sm-2" type="search" placeholder="Search Event" aria-label="Search" />
                     <button className="buttonSearch" type="submit">
                         <i className="fas fa-search white"></i> 
                     </button>
                 </form>
-            </div>
+            </div> */}
+
+            <SearchBar />
 
 
             <div className="ml-auto navbar-custom-pr-1">

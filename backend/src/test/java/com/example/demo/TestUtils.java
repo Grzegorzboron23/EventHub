@@ -10,6 +10,7 @@ import com.example.demo.valueobject.UserPrivileges;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
+import java.util.List;
 
 public class TestUtils {
     public static Event createCorrectEvent() {
@@ -18,6 +19,7 @@ public class TestUtils {
                 new User(),
                 "Event 1",
                 "This is a test event",
+                List.of("dddhfufhuouidfdh"),
                 createCorrectAddress());
     }
 

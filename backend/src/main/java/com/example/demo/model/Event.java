@@ -11,6 +11,8 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "Event")
 @Getter
@@ -31,6 +33,9 @@ public class Event extends BaseEntity {
     private String name;
 
     private String description;
+
+//    TODO: Implement it save on local server
+    private List<String> imagePath;
 
     @Embedded
     private Address address;

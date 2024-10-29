@@ -13,3 +13,7 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
+
+file:
+  upload-dir:  src/main/uploads
+#  Change to global variable and instead od save in my project on uploads in another folder in system operation

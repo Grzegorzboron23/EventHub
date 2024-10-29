@@ -8,6 +8,7 @@ import com.example.demo.model.User;
 import com.example.demo.repository.EventRepository;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.service.EventService;
+import com.example.demo.utils.PagedResponse;
 import com.example.demo.utils.UserUtils;
 import com.example.demo.valueobject.UserPrivileges;
 import jakarta.persistence.EntityNotFoundException;
@@ -72,11 +73,11 @@ public class EventServiceTest {
         Page<Event> eventPage = new PageImpl<>(events);
         when(eventRepository.findAll(any(PageRequest.class))).thenReturn(eventPage);
 
-        List<EventDTO> eventDTOs = eventService.getEvents(1);
+        PagedResponse<EventDTO> eventDTOs = eventService.getEvents(1);
 
         assertNotNull(eventDTOs);
-        assertEquals(1, eventDTOs.size());
-        assertEquals("Event 1", eventDTOs.get(0).getEventName());
+        assertEquals(1, eventDTOs.getContent().size());
+        assertEquals("Event 1", eventDTOs.getContent().get(0).getEventName());
 
         verify(eventRepository, times(1)).findAll(any(Pageable.class));
     }

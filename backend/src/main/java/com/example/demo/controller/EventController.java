@@ -2,13 +2,13 @@ package com.example.demo.controller;
 
 import com.example.demo.dto.EventDTO;
 import com.example.demo.service.EventService;
+import com.example.demo.utils.PagedResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.nio.file.AccessDeniedException;
-import java.util.List;
 
 @Controller
 @CrossOrigin(origins = "http://localhost:3000")
@@ -24,8 +24,17 @@ public class EventController {
     }
 
     @GetMapping("/all/{page}")
-    public ResponseEntity<List<EventDTO>> getEventByPage(@PathVariable(required = false) Integer page) {
-        return ResponseEntity.ok(eventService.getEvents(page == null ? 1 : page));
+    public ResponseEntity<PagedResponse<EventDTO>> getEventByPage(@PathVariable(required = false) Integer page) {
+        int pageNumber = (page != null && page > 0) ? page : 1;
+        return ResponseEntity.ok(eventService.getEvents(pageNumber));
+    }
+
+    @GetMapping({"/eventsByName/{name}", "/eventsByName/{name}/{page}"})
+    public ResponseEntity<PagedResponse<EventDTO>> getEventsByName(
+            @PathVariable String name,
+            @PathVariable(required = false) Integer page) {
+        int pageNumber = (page != null && page > 0) ? page : 1;
+        return ResponseEntity.ok(eventService.findByNameContaining(name, pageNumber));
     }
 
     @PostMapping
@@ -36,7 +45,7 @@ public class EventController {
     @DeleteMapping("/{eventId}")
     public ResponseEntity<String> deleteEvent(@PathVariable  Long eventId) throws AccessDeniedException {
         eventService.deleteEvent(eventId);
-        return ResponseEntity.ok("Event deleted succesfully");
+        return ResponseEntity.ok("Event deleted successfully");
     }
 
     @PutMapping("/{eventId}")
