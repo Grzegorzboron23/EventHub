@@ -6,6 +6,7 @@ import Navbar from './components/Navbar';
 import Home from './components/Home';
 import Events from './components/Events';
 import EventDetails from './components/EventDetails';
+import SearchResults from './components/SearchResults.js';
 
 
 
@@ -18,7 +19,7 @@ root.render(
         <Route path="/home" element={<Home />} />
         <Route path="/events" element={<Events />} />
         <Route path="/event/:id" element={<EventDetails />} />
-        <Route path="/search/:query" element={<SearchResults />} />
+        <Route path="/search/:query" element={<SearchResults />} /> 
       </Routes>
     </Router>
   </React.StrictMode>

@@ -5,7 +5,7 @@ const ErrorComponent = ({ error }) => {
 
     return (
         <div style={{ color: 'red' }}>
-            <p>Błąd: {error}</p>
+            <p>Error: {error}</p>
         </div>
     );
 };

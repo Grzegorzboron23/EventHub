@@ -14,7 +14,6 @@ import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -56,7 +55,7 @@ public class EventService {
 
         return new PagedResponse<>(
                 eventDTOs,
-                eventPage.getNumber() + 1,
+                eventPage.getNumber(),
                 eventPage.getSize(),
                 eventPage.getTotalElements(),
                 eventPage.getTotalPages(),
@@ -139,16 +138,16 @@ public class EventService {
 
 
     public PagedResponse<EventDTO> findByNameContaining(String name, Integer page) {
-        PageRequest pageRequest = PageRequest.of(page, PAGE_SIZE, Sort.by("dateRange.startDate").descending());
+        PageRequest pageRequest = PageRequest.of(page -1, PAGE_SIZE);
         Page<Event> events = eventRepository.findByNameContainingIgnoreCase(name, pageRequest);
-
+        
         List<EventDTO> eventDTOs = events.stream()
                 .map(EventDTO::new)
                 .collect(Collectors.toList());
 
         return new PagedResponse<>(
                 eventDTOs,
-                events.getNumber() +1,
+                events.getNumber(),
                 events.getSize(),
                 events.getTotalElements(),
                 events.getTotalPages(),

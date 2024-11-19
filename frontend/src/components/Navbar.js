@@ -45,17 +45,7 @@ const Navbar = () => {
                 
             </div>
 
-            {/* <div className="mx-auto d-flex">
-                <form className="form-inline d-flex">
-                    <input className="form-control mr-sm-2" type="search" placeholder="Search Event" aria-label="Search" />
-                    <button className="buttonSearch" type="submit">
-                        <i className="fas fa-search white"></i> 
-                    </button>
-                </form>
-            </div> */}
-
             <SearchBar />
-
 
             <div className="ml-auto navbar-custom-pr-1">
             <a href="https://github.com/GrzegorzBoron23" target="_blank" rel="noopener noreferrer" className="btn transform-12 white">
