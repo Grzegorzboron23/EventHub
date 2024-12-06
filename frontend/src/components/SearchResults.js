@@ -4,6 +4,8 @@ import EventCard from './EventCard';
 import useFetchData from './fetchData/useFetchData';
 import LoadingComponent from './errors/LoadingError';
 import ErrorComponent from './errors/ErrorComponent';
+import { Row, Column } from 'react-foundation';
+
 
 
 const SearchResults = () => {

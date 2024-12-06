@@ -3,35 +3,18 @@ import { useParams } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Card, Container } from 'react-bootstrap';
 import '../styles/eventDetails.css';
+import useFetchData from './fetchData/useFetchData';
+import Error from './errors/ErrorComponent';
+import Loading from './errors/LoadingError';
+
+
+
 
 
 const EventDetails = () => {
-    const { id } = useParams(); //Get id from url
-    const [event, setEvent] = useState(null);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
-
-    useEffect(() => {
-        const fetchEventDetails = async () => {
-            try {
-                const response = await fetch(`${process.env.REACT_APP_BASE_URL}/event/${id}`);
-                console.log("response", response);
-                if (!response.ok) {
-                    throw new Error('Failed to fetch event details');
-                }
-                const data = await response.json();
-                console.log("data", data);
-                setEvent(data);
-                setLoading(false);
-            } catch (error) {
-                console.error("Error fetching event details:", error);
-                setError(error.message);
-                setLoading(false);
-            }
-        };
-
-        fetchEventDetails();
-    }, [id]);
+    const { id } = useParams(); 
+    const url = `${process.env.REACT_APP_BASE_URL}/event/${id}`;
+    const { data: event, loading, error } = useFetchData(url);
 
     const formatDateTime = (isoString) => {
         const date = new Date(isoString);
@@ -40,8 +23,9 @@ const EventDetails = () => {
         return `${datePart} ${timePart}`;
     };
 
-    if (loading) return <div>Loading...</div>;
-    if (error) return <div>Error: {error}</div>;
+    if (loading) return <Loading />;
+    if (error) return <Error message={error} />
+    
 
     return (
         <Container className="mt-5">
