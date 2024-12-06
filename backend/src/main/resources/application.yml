@@ -14,5 +14,16 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
 
-file:
-  image.upload-dir:  src/main/uploads
+image:
+  upload-dir: src/main/uploads
+
+logging:
+  level:
+    root: INFO
+    com.example: DEBUG
+  file:
+    name: logs/application.log
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %5p [%t] %c{1}:%L - %m%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss} - %5p [%t] %c{1}:%L - %m%n"
+

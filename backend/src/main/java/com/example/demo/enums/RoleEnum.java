@@ -3,7 +3,7 @@ package com.example.demo.enums;
 public enum RoleEnum {
     ADMIN("Admin", 3),
     MODERATOR("Moderator", 2),
-    DEFAULT("Default",1);
+    DEFAULT("Default", 1);
 
     private final String roleName;
     private final int privilegesNumber;
@@ -13,14 +13,6 @@ public enum RoleEnum {
         this.privilegesNumber = privilegesNumber;
     }
 
-    public String getRoleName() {
-        return roleName;
-    }
-
-    public int getPrivilegesNumber() {
-        return privilegesNumber;
-    }
-
     public static RoleEnum fromRoleName(String roleName) {
         for (RoleEnum role : RoleEnum.values()) {
             if (role.getRoleName().equalsIgnoreCase(roleName)) {
@@ -28,6 +20,14 @@ public enum RoleEnum {
             }
         }
         throw new IllegalArgumentException("No enum constant with role name: " + roleName);
+    }
+
+    public String getRoleName() {
+        return roleName;
+    }
+
+    public int getPrivilegesNumber() {
+        return privilegesNumber;
     }
 
 }

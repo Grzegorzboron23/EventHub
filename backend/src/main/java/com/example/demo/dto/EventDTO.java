@@ -9,16 +9,6 @@ import java.time.LocalDateTime;
 @Getter
 public class EventDTO {
 
-    public EventDTO(Event event) {
-        this.eventId = event.getId();
-        this.userId = event.getUsers().getId();
-        this.eventName = event.getName();
-        this.eventDescription = event.getDescription();
-        this.startTime = event.getDateRange().startDate();
-        this.endTime = event.getDateRange().endDate();
-        this.address = event.getAddress();
-    }
-
     private final Long eventId;
     private final Long userId;
     private final String eventName;
@@ -26,4 +16,14 @@ public class EventDTO {
     private final LocalDateTime startTime;
     private final LocalDateTime endTime;
     private Address address;
+
+    public EventDTO(Event event) {
+        this.eventId = event.getId();
+        this.userId = event.getUser().getId();
+        this.eventName = event.getName();
+        this.eventDescription = event.getDescription();
+        this.startTime = event.getDateRange().startDate();
+        this.endTime = event.getDateRange().endDate();
+        this.address = event.getAddress();
+    }
 }

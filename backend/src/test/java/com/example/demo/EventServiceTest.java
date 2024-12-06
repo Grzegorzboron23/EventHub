@@ -9,7 +9,6 @@ import com.example.demo.repository.EventRepository;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.service.EventService;
 import com.example.demo.utils.PagedResponse;
-import com.example.demo.utils.UserUtils;
 import com.example.demo.valueobject.UserPrivileges;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
@@ -28,12 +27,10 @@ import static org.mockito.Mockito.*;
 
 public class EventServiceTest {
 
-    private EventService eventService;
     private final EventRepository eventRepository = mock(EventRepository.class);
     private final UserRepository userRepository = mock(UserRepository.class);
     private final SessionManager sessionManager = mock(SessionManager.class);
-
-
+    private EventService eventService;
 
     @BeforeEach
     public void setUp() {
@@ -89,7 +86,7 @@ public class EventServiceTest {
 
         when(userRepository.findById(user.getId())).thenReturn(Optional.of(user));
         Event event = TestUtils.createCorrectEvent();
-        event.setUsers(user);
+        event.setUser(user);
 
         EventDTO eventDTO = new EventDTO(event);
         when(eventRepository.save(any(Event.class))).thenReturn(event);
@@ -99,16 +96,16 @@ public class EventServiceTest {
         assertNotNull(savedEvent);
         assertEquals("Event 1", savedEvent.getName());
         assertEquals("This is a test event", savedEvent.getDescription());
-        assertEquals(user, savedEvent.getUsers());
+        assertEquals(user, savedEvent.getUser());
     }
 
     @Test
-    public void whenDeleteEventByAdmin_thenDelete(){
+    public void whenDeleteEventByAdmin_thenDelete() {
         Event event = TestUtils.createCorrectEvent();
         User user = TestUtils.createCorrectUser();
 
         event.setId(1L);
-        event.setUsers(user);
+        event.setUser(user);
 
         when(eventRepository.findById(event.getId())).thenReturn(Optional.of(event));
         when(userRepository.findById(user.getId())).thenReturn(Optional.of(user));
@@ -118,7 +115,7 @@ public class EventServiceTest {
     }
 
     @Test
-    public void whenDeleteEventByOtherUser_thenThrowAccessDeniedException(){
+    public void whenDeleteEventByOtherUser_thenThrowAccessDeniedException() {
         Event event = TestUtils.createCorrectEvent();
         User user = TestUtils.createCorrectUser();
 
@@ -134,7 +131,7 @@ public class EventServiceTest {
     }
 
     @Test
-    public void whenDeleteEventByCreator_thenDelete(){
+    public void whenDeleteEventByCreator_thenDelete() {
         Event event = TestUtils.createCorrectEvent();
         User user = TestUtils.createCorrectUser();
 

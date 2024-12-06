@@ -5,10 +5,7 @@ import com.example.demo.repository.EventRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -21,17 +18,17 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/uploads")
+@CrossOrigin(origins = "http://localhost:3000")
 public class ImageUploadController {
 
-    @Value("${file.upload-dir}")
-    private String uploadDir;
     private final EventRepository eventRepository;
+    @Value("${image.upload-dir}")
+    private String uploadDir;
 
     public ImageUploadController(EventRepository eventRepository) {
         this.eventRepository = eventRepository;
     }
 
-//    TODO: test all
     @PostMapping("/events/images")
     public ResponseEntity<Event> uploadEventImages(@RequestParam("files") List<MultipartFile> files,
                                                    @RequestParam("eventId") Long eventId) {

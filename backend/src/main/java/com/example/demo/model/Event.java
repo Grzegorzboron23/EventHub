@@ -1,15 +1,14 @@
 package com.example.demo.model;
 
 import com.example.demo.dto.EventDTO;
-import com.example.demo.repository.UserRepository;
 import com.example.demo.valueobject.Address;
 import com.example.demo.valueobject.DateRange;
-import jakarta.persistence.Embedded;
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.List;
 
@@ -25,16 +24,16 @@ public class Event extends BaseEntity {
     @NotNull
     private DateRange dateRange;
 
-    @OneToOne
-    @NotNull
-    private User users;
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
     @NotNull
     private String name;
 
     private String description;
 
-//    TODO: Implement it save on local server
+    //    TODO: Implement it save on local server
     private List<String> imagePath;
 
     @Embedded
@@ -52,13 +51,13 @@ public class Event extends BaseEntity {
 
         this.setAddress(
                 new Address(
-                            eventDTO.getAddress().getStreet(),
+                        eventDTO.getAddress().getStreet(),
                         eventDTO.getAddress().getCity(),
                         eventDTO.getAddress().getPostalCode(),
                         eventDTO.getAddress().getCountry()
                 )
         );
 
-        this.setUsers(user);
+        this.setUser(user);
     }
 }

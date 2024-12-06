@@ -48,7 +48,6 @@ public class EventService {
         PageRequest pageRequest = PageRequest.of(page - 1, PAGE_SIZE, Sort.by("dateRange.startDate").descending());
         Page<Event> eventPage = eventRepository.findAll(pageRequest);
 
-
         List<EventDTO> eventDTOs = eventPage.stream()
                 .map(EventDTO::new)
                 .toList();
@@ -74,12 +73,12 @@ public class EventService {
         event.setDescription(eventDTO.getEventDescription());
         event.setDateRange(new DateRange(eventDTO.getStartTime(), eventDTO.getEndTime()));
         event.setAddress(eventDTO.getAddress());
-        event.setUsers(user);
+        event.setUser(user);
 
         return eventRepository.save(event);
     }
 
-//    TODO: ADD TESTS
+    //    TODO: ADD TESTS
     @Transactional
     public EventDTO updateEvent(EventDTO eventDTO) throws AccessDeniedException {
         Event event = getEventIfUserHasAccess(eventDTO);
@@ -88,20 +87,20 @@ public class EventService {
         event.setDescription(eventDTO.getEventDescription());
         event.setDateRange(new DateRange(eventDTO.getStartTime(), eventDTO.getEndTime()));
         event.setAddress(eventDTO.getAddress());
-        event.setUsers(userRepository.findById(eventDTO.getUserId())
+        event.setUser(userRepository.findById(eventDTO.getUserId())
                 .orElseThrow(() -> new IllegalArgumentException("Cannot find user please try again later")));
 
-        return new  EventDTO(eventRepository.save(event));
+        return new EventDTO(eventRepository.save(event));
     }
 
     @Transactional
     public void deleteEvent(Long id) throws AccessDeniedException {
         Event event = eventRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Event not found, please try again later"));
-        User user = userRepository.findById(event.getUsers().getId())
+        User user = userRepository.findById(event.getUser().getId())
                 .orElseThrow(() -> new IllegalArgumentException("Cannot find user, please try again later"));
 
-        Long eventCreatorId = event.getUsers().getId();
+        Long eventCreatorId = event.getUser().getId();
         if (!checkUserAccess(user, eventCreatorId)) {
             throw new AccessDeniedException("You cannot modify this event");
         }
@@ -115,7 +114,7 @@ public class EventService {
         User user = userRepository.findById(eventDTO.getUserId())
                 .orElseThrow(() -> new IllegalArgumentException("Cannot find user, please try again later"));
 
-        Long eventCreatorId = event.getUsers().getId();
+        Long eventCreatorId = event.getUser().getId();
         if (!checkUserAccess(user, eventCreatorId)) {
             throw new AccessDeniedException("You cannot modify this event");
         }
@@ -127,20 +126,20 @@ public class EventService {
         return UserUtils.isAdmin(user) || Objects.equals(sessionManager.getLoggedUserId(), eventCreatorId);
     }
 
-//    TODO: ADD tests
+    //    TODO: ADD tests
     @Transactional
     public EventDTO createEvent(EventDTO eventDTO) {
         User user = userRepository.findById(eventDTO.getUserId())
                 .orElseThrow(() -> new IllegalArgumentException("Cannot find user, please try again later"));
         Event event = new Event(eventDTO, user);
-       return new EventDTO(eventRepository.save(event));
+        return new EventDTO(eventRepository.save(event));
     }
 
 
     public PagedResponse<EventDTO> findByNameContaining(String name, Integer page) {
-        PageRequest pageRequest = PageRequest.of(page -1, PAGE_SIZE);
+        PageRequest pageRequest = PageRequest.of(page - 1, PAGE_SIZE);
         Page<Event> events = eventRepository.findByNameContainingIgnoreCase(name, pageRequest);
-        
+
         List<EventDTO> eventDTOs = events.stream()
                 .map(EventDTO::new)
                 .collect(Collectors.toList());

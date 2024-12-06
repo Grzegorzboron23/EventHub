@@ -8,18 +8,18 @@ import org.springframework.stereotype.Component;
 public class SessionManager {
     private final HttpSession session;
 
-    public SessionManager(HttpSession session){
+    public SessionManager(HttpSession session) {
         this.session = session;
     }
 
-    public void setUserIdInSession(Long userIdInSession){
-        session.setAttribute("userId",userIdInSession);
+    public void setUserIdInSession(Long userIdInSession) {
+        session.setAttribute("userId", userIdInSession);
     }
 
-    public Long getLoggedUserId(){
+    public Long getLoggedUserId() {
         Object userId = session.getAttribute("userId");
 
-        if(userId!= null){
+        if (userId != null) {
             return (Long) userId;
         }
 

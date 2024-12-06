@@ -17,5 +17,6 @@ public interface EventRepository extends BaseRepository<Event, Long> {
     Page<Event> findByAddress_City(String city, Pageable pageable);
 
     Page<Event> findByAddress_Country(String country, Pageable pageable);
+
     Page<Event> findByAddress_CountryContaining(String country, Pageable pageable);
 }

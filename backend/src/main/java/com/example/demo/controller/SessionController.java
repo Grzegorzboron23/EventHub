@@ -17,7 +17,7 @@ public class SessionController {
     private final SessionManager sessionManager;
     private final UserRepository userRepository;
 
-//    TODO: DELETE IF AFTER ADD SPRING SECURITY
+    //    TODO: DELETE IF AFTER ADD SPRING SECURITY
     @GetMapping("/")
     public ResponseEntity<String> setSession() {
         List<User> users = userRepository.findAll();

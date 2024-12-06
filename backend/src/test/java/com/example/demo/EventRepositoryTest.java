@@ -13,7 +13,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.ActiveProfiles;
 
-
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -29,17 +28,17 @@ public class EventRepositoryTest {
     UserRepository userRepository;
 
     User user = TestUtils.createCorrectUser();
-    Event  event = TestUtils.createCorrectEvent();
+    Event event = TestUtils.createCorrectEvent();
 
 
     @BeforeEach
-    public void initializeDatabase(){
-        event.setUsers(user);
+    public void initializeDatabase() {
+        event.setUser(user);
 
         userRepository.save(user);
         eventRepository.save(event);
     }
-    
+
     @Test
     public void testSaveEvent() {
         assertNotNull(event);
@@ -47,15 +46,15 @@ public class EventRepositoryTest {
 
 
     @Test
-    public void testFindByNameContainingIgnoreCase(){
-        Page<Event> events=  eventRepository.findByNameContainingIgnoreCase(event.getName().substring(2), Pageable.ofSize(10));
+    public void testFindByNameContainingIgnoreCase() {
+        Page<Event> events = eventRepository.findByNameContainingIgnoreCase(event.getName().substring(2), Pageable.ofSize(10));
 
         assertEquals(1, events.getTotalElements());
         assertEquals(event.getName(), events.getContent().get(0).getName());
     }
 
     @Test
-    public void testFindByNameIgnoreCase(){
+    public void testFindByNameIgnoreCase() {
         Optional<Event> foundEvent = eventRepository.findByNameIgnoreCase(event.getName());
 
         assertTrue(foundEvent.isPresent());

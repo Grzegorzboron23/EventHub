@@ -38,18 +38,18 @@ public class EventController {
     }
 
     @PostMapping
-    public ResponseEntity<EventDTO> createEvent(@RequestBody  EventDTO eventDTO) {
+    public ResponseEntity<EventDTO> createEvent(@RequestBody EventDTO eventDTO) {
         return ResponseEntity.ok(eventService.createEvent(eventDTO));
     }
 
     @DeleteMapping("/{eventId}")
-    public ResponseEntity<String> deleteEvent(@PathVariable  Long eventId) throws AccessDeniedException {
+    public ResponseEntity<String> deleteEvent(@PathVariable Long eventId) throws AccessDeniedException {
         eventService.deleteEvent(eventId);
         return ResponseEntity.ok("Event deleted successfully");
     }
 
     @PutMapping("/{eventId}")
-    public ResponseEntity<EventDTO> updateEvent(@RequestBody  EventDTO eventDTO) throws AccessDeniedException {
+    public ResponseEntity<EventDTO> updateEvent(@RequestBody EventDTO eventDTO) throws AccessDeniedException {
         return ResponseEntity.ok(eventService.updateEvent(eventDTO));
     }
 }

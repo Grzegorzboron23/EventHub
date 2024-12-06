@@ -14,7 +14,7 @@ import java.util.List;
 
 public class TestUtils {
     public static Event createCorrectEvent() {
-       return  new Event(
+        return new Event(
                 createCorrectDateRange(),
                 new User(),
                 "Event 1",
@@ -34,19 +34,20 @@ public class TestUtils {
         return new Address("Wyszynskiego", "Warsaw", "51-531", "Poland");
     }
 
-    public static  User createCorrectUser() {
+    public static User createCorrectUser() {
         return new User(
                 "Grzegorz",
                 "Pietraszko",
                 "GrzegorzP24",
                 "dihdygfdfdyofdfdsy",
+                List.of(new Event()),
                 "grzegorzp24@gmail.com",
                 "856738444",
                 TestUtils.setAdminPrivileges(),
                 0);
     }
 
-    public static UserPrivileges setAdminPrivileges(){
+    public static UserPrivileges setAdminPrivileges() {
         return new UserPrivileges(RoleEnum.ADMIN);
     }
 
